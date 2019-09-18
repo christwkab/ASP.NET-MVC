@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EpicerieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Fournisseur">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nchar" MaxLength="25" />
+    <Property Name="Adresse" Type="nchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Produit">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Designation" Type="nchar" MaxLength="25" />
+    <Property Name="Prix" Type="money" />
+    <Property Name="Qte" Type="int" />
+    <Property Name="IDFournisseur" Type="int" />
+  </EntityType>
+  <Association Name="FK_Produit_Fournisseur">
+    <End Role="Fournisseur" Type="Self.Fournisseur" Multiplicity="0..1" />
+    <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fournisseur">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Produit">
+        <PropertyRef Name="IDFournisseur" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EpicerieModelStoreContainer">
+    <EntitySet Name="Fournisseur" EntityType="Self.Fournisseur" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produit" EntityType="Self.Produit" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Produit_Fournisseur" Association="Self.FK_Produit_Fournisseur">
+      <End Role="Fournisseur" EntitySet="Fournisseur" />
+      <End Role="Produit" EntitySet="Produit" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
